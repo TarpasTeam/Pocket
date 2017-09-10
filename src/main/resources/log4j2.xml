@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" monitorInterval="60">
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p %c{1}(%F:%L) - %m%n" />
+		</Console>
+
+		<RollingFile name="fixedTimeFileAppender"
+			fileName="Pocket/logs/pocket.log"
+			filePattern="Pocket/logs/pocket.log.%d{yyyy-MM-dd_HH}-%i.log">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p %c{1}(%F:%L) - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="500 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="24"/>
+		</RollingFile>
+
+		<RollingFile name="appMonitorFixedTimeFileAppender"
+			fileName="Pocket/logs/pocket-appmonitor.log"
+			filePattern="Pocket/logs/pocket-appmonitor.log.%d{yyyy-MM-dd_HH}-%i.log">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p %c{1}(%F:%L) - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="500 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="24"/>
+		</RollingFile>
+		
+        <RollingFile name="appReportFixedTimeFileAppender"
+            fileName="Pocket/logs/pocket-report.log"
+            filePattern="Pocket/logs/pocket-report.log.%d{yyyy-MM-dd_HH}-%i.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p %c{1}(%F:%L) - %m%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="500 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="24"/>
+        </RollingFile>
+
+
+	</Appenders>
+
+	<Loggers>
+		<AsyncLogger name="cn.tarpas.pocket" level="debug"
+			additivity="false" includeLocation="true">
+			<AppenderRef ref="fixedTimeFileAppender" />
+		</AsyncLogger>
+		
+		<AsyncLogger name="org.springframework" level="info"
+			additivity="false" includeLocation="true">
+			<AppenderRef ref="fixedTimeFileAppender" />
+		</AsyncLogger>
+
+		<AsyncLogger name="com.alibaba.druid" level="debug"
+			additivity="false" includeLocation="true">
+			<AppenderRef ref="fixedTimeFileAppender" />
+		</AsyncLogger>
+
+		<AsyncLogger name="appMonitor" level="info" additivity="false"
+			includeLocation="true">
+			<AppenderRef ref="appMonitorFixedTimeFileAppender" />
+		</AsyncLogger>
+        <AsyncLogger name="pointReport" level="info" additivity="false"
+            includeLocation="true">
+            <AppenderRef ref="appReportFixedTimeFileAppender" />
+        </AsyncLogger>
+
+		<Root level="info" includeLocation="true">
+			<AppenderRef ref="fixedTimeFileAppender" />
+		</Root>
+	</Loggers>
+</Configuration>
