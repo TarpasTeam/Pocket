@@ -6,7 +6,7 @@ import cn.tarpas.pocket.annotation.ParameterNotNull;
 import cn.tarpas.pocket.annotation.ParameterPhone;
 import cn.tarpas.pocket.annotation.ParameterStringLength;
 
-public class LoginReq {
+public class LoginReq{
 	@JsonProperty(value = "telphone")
 	@ParameterPhone
 	@ParameterNotNull
@@ -35,6 +35,6 @@ public class LoginReq {
 
 	@Override
 	public String toString() {
-		return "LoginReq [telphone=" + telphone + ", password=" + password + "]";
+		return "[telphone=" + telphone + ", password=" + password + "]";
 	}
 }

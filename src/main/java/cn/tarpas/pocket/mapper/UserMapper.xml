@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="mapper.UserMapper" >
-  <resultMap id="BaseResultMap" type="po.User" >
+<mapper namespace="cn.tarpas.pocket.mapper" >
+  <resultMap id="BaseResultMap" type="cn.tarpas.pocket.po" >
     <id column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="school" property="school" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
@@ -12,6 +12,15 @@
   <sql id="Base_Column_List" >
     user_id, school, phone, password, nickname, head
   </sql>
+  
+  <!-- 自定义SQL函数 -->
+  
+  <select id="userExist" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select * from user where phone = #{phone,jdbcType=VARCHAR}	
+  </select>
+  
+  <!-- 自定义SQL函数 -->
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -22,7 +31,7 @@
     delete from user
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="po.User" >
+  <insert id="insert" parameterType="cn.tarpas.pocket.po" >
     insert into user (user_id, school, phone, 
       password, nickname, head
       )
@@ -30,7 +39,7 @@
       #{password,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{head,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="po.User" >
+  <insert id="insertSelective" parameterType="cn.tarpas.pocket.po" >
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
@@ -73,7 +82,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="po.User" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.tarpas.pocket.po" >
     update user
     <set >
       <if test="school != null" >
@@ -94,7 +103,7 @@
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="po.User" >
+  <update id="updateByPrimaryKey" parameterType="cn.tarpas.pocket.po" >
     update user
     set school = #{school,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},

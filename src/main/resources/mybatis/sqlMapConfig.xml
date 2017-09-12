@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<!-- 配置别名 -->
 	<typeAliases>
 		<!-- 批量扫描别名 -->
-		<package name="po"/>
+		<package name="cn.tarpas.pocket.po"/>
 	</typeAliases>
 
 	<!-- 配置mapper
