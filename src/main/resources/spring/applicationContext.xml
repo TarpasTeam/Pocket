@@ -21,15 +21,24 @@
 	<!-- 配置全局异常处理器 
 	只要实现HandlerExceptionResolver接口就是全局异常处理器
 	-->
+	<mvc:annotation-driven />
 	
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  
+    	<property name="messageConverters">  
+        	<list>  
+            	<ref bean="jsonHttpMessageConverter" />  
+       	 	</list>  
+    	</property>  
+	</bean>  
+  
+	<bean id="jsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">  
+    	<property name="supportedMediaTypes">  
+        	<list>  
+            	<value>application/json;charset=UTF-8</value>  
+        	</list>  
+    	</property>  
+	</bean>
 	
-	
-	
-	
-
-	<!-- 配置视图解析器 -->
-	<!-- <bean class = "org.springframework.web.servlet.view.ResourceBundleViewResolver">
-	</bean> -->
 </beans>
     
     
