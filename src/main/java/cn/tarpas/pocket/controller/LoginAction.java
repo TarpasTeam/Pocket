@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import cn.tarpas.pocket.common.dto.ErrorStatus;
+import cn.tarpas.pocket.common.dto.WebMessage;
 import cn.tarpas.pocket.dto.LoginReq;
 import cn.tarpas.pocket.dto.LoginRsp;
 import cn.tarpas.pocket.po.User;
 import cn.tarpas.pocket.service.UserService;
 import cn.tarpas.pocket.util.JsonMapper;
+import cn.tarpas.pocket.util.Token;
 
 
 
@@ -28,12 +30,12 @@ import cn.tarpas.pocket.util.JsonMapper;
 public class LoginAction {
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginAction.class);
 	private static final JsonMapper JSON_MAPPER = new JsonMapper();
-	
+	private static final Token getToken =new Token();
 	@Autowired
 	private UserService userService;
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public @ResponseBody DeferredResult<LoginRsp> login(
+	public @ResponseBody WebMessage<LoginRsp> login(
 			@RequestBody String requestBody,
 			HttpServletRequest httpRequest,
 			HttpServletResponse httpResponse
@@ -42,7 +44,8 @@ public class LoginAction {
 		
 		LoginReq loginReq = JSON_MAPPER.fromJson(requestBody,LoginReq.class);
 		
-		DeferredResult<LoginRsp> loginRsp =new DeferredResult<LoginRsp>();
+		WebMessage<LoginRsp> response = new WebMessage<LoginRsp>();
+		LoginRsp loginRsp = new LoginRsp();
 		
 		User user = new User();
 		user.setPhone(loginReq.getTelphone());
@@ -50,20 +53,24 @@ public class LoginAction {
 		
 		boolean exist = userService.userExist(user);
 		if(!exist){
-			loginRsp.setErrorResult(ErrorStatus.ERR_MEMBER_NOT_EXIST);
-			return loginRsp;
+			response.setErrorCode(ErrorStatus.ERR_MEMBER_NOT_EXIST);
+			return response;
 		}
 		
 		boolean result = userService.login(user);
 		if(!result){
-			loginRsp.setErrorResult(ErrorStatus.ERR_PASSWORD);
-			return loginRsp;
+			response.setErrorCode(ErrorStatus.ERR_PASSWORD);
+			return response;
 		}
 		
-		loginRsp.setErrorResult(ErrorStatus.SUCCESS);
-		System.out.println(loginRsp.toString());
+		String token = getToken.createToken(user.getPhone(), user.getPassword());
 		
-		return loginRsp;
+		loginRsp.setToken(token);
+		
+		response.setErrorCode(ErrorStatus.SUCCESS);
+		response.setResult(loginRsp);
+		
+		return response;
 		
 	}
 	

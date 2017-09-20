@@ -1,7 +1,7 @@
 package cn.tarpas.pocket.common.dto;
 
 public enum ErrorStatus {
-    SUCCESS("0", "请求成功"),   
+    SUCCESS("0", "success"),   
     
     ERR_SYSTEM_BUSY("919001", "系统繁忙"),
     ERR_PARAMETER("919002", "参数错误"),
