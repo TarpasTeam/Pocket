@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.tarpas.pocket.mapper.ScenicSpotsMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.tarpas.pocket.po.ScenicSpot" >
+    <id column="scenic_id" property="scenicId" jdbcType="INTEGER" />
+    <result column="scenic_name" property="scenicName" jdbcType="VARCHAR" />
+    <result column="head" property="head" jdbcType="VARCHAR" />
+    <result column="detail_image" property="detailImage" jdbcType="VARCHAR" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="detail_address" property="detailAddress" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="REAL" />
+    <result column="heat" property="heat" jdbcType="BIGINT" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="scenic_class_detial_id" property="scenicClassDetialId" jdbcType="INTEGER" />
+    <result column="isPopular" property="ispopular" jdbcType="BIT" />
+    <result column="picture" property="picture" jdbcType="VARCHAR" />
+	<result column="isDeleted" property="isDeleted" jdbcType="BIT"/>
+  </resultMap>
+ 	
+ 	<sql id="Base_Column_List">
+ 		scenic_id, scenic_name, head, detail_image, intro, price, address, detail_address, phone, grade, heat, city_id,scenic_class_detial_id,isPopular, picture,isDeleted
+ 	</sql>
+ 	
+ 	<!-- 自定义Sql函数  -->
+ 	<insert id="insert" parameterType="cn.tarpas.pocket.po.ScenicSpot" >
+ 		insert into scenic_spot ( scenic_name, head, detail_image, intro, price,
+		address, detail_address, phone, grade, heat, city_id,scenic_class_detial_id,
+		isPopular, picture
+		)values(#{scenicName,jdbcType=VARCHAR},#{head,jdbcType=VARCHAR},#{detailImage,jdbcType=VARCHAR},
+		#{intro,jdbcType=VARCHAR},#{price,jdbcType=INTEGER},#{address,jdbcType=VARCHAR},#{detailAddress,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR},#{grade,jdbcType=REAL},0,#{cityId,jdbcType=INTEGER},
+		#{scenicClassDetialId,jdbcType=INTEGER},0,#{picture,jdbcType=VARCHAR})
+ 	</insert>
+ 	
+ 	<select id="select" parameterType="cn.tarpas.pocket.po.ScenicSpot" resultType="cn.tarpas.pocket.po.ScenicSpot">
+ 		select * from scenic_spot 
+ 		where  isDeleted = false
+			<if test="cityId != null">and city_id = #{cityId,jdbcType=BIGINT} </if>
+			<if test="scenicId != null">and scenic_id = #{scenicId,jdbcType=INTEGER}</if>
+			<if test="scenicName != null">and scenic_name #{scenicName,jdbcType=VARCHAR}</if>
+			<if test="scenicClassDetialId != null">and scenic_class_detial_id=#{scenicClassDetialId,jdbcType=INTEGER}</if>
+			<if test="isPopular != null">and isPopular = #{isPopular}</if>
+ 	</select>
+ 
+ 	<delete id="delete" parameterType="java.lang.Integer">
+ 		update scenic_spot  set  isDeleted = 1 where scenic_id = #{scenicId}
+ 	</delete>
+ 	
+ 	<update id="update" parameterType="cn.tarpas.pocket.po.ScenicSpot">
+ 		update scenic_spot
+ 		<set>
+	 		<trim suffixOverrides=",">
+	 			<if test="scenicName != null">scenic_name = #{scenicName,jdbcType=VARCHAR},</if>
+	 			<if test="head != null">head = #{head,jdbcType=VARCHAR},</if>
+	 			<if test="detail_image != null">detail_image = #{detailImage,jdbcType=VARCHAR},</if>
+	 			<if test="intro != null">intro = #{intro,jdbcType=VARCHAR},</if>
+	 			<if test="price != null">price = #{price,jdbcType=INTEGER},</if>
+	 			<if test="address != null">address = #{address,jdbcType=VARCHAR},</if>
+	 			<if test="detailAddress != null">detail_address = #{detailAddress,jdbcType=VARCHAR},</if>
+	 			<if test="phone != null">phone = #{phone,jdbcType=VARCHAR},</if>
+	 			<if test="grade != null">grade = #{grade,jdbcType=REAL},</if>
+	 			<if test="heat != null">heat = #{heat,jdbcType=BIGINT},</if>
+	 			<if test="cityId != null">city_id = #{cityId,jdbcType=INTEGER},</if>
+	 			<if test="scenicClassDetialId != null">scenic_class_detial_id = #{scenicClassDetialId,jdbcType=INTEGER},</if>
+	 			<if test="ispopular != null">ispopular = #{ispopular,jdbcType=BIT},</if>
+	 			<if test="picture != null">picture = #{picture,jdbcType=VARCHAR},</if>
+	 			<if test="isPopular!=null">isPopular=#{isPopular},</if>	 			
+	 		</trim>
+ 		</set>
+ 		where scenic_id = #{scenicId,jdbcType=BIGINT}
+ 	</update>
+ 	
+ 	<!-- 搜索  -->
+ 	<select id="search" parameterType="map" resultType="cn.tarpas.pocket.po.ScenicSpot">
+ 		select * from scenic_spot
+ 		where isDeleted = 0
+ 			<if test="keyword != null">
+ 				and scenic_name like #{keyword}
+ 				or price like #{keyword}
+ 				or address like #{keyword}
+ 			</if>
+ 			<if test="cityId != null">
+ 				and  city_id = #{cityId}
+ 			</if>
+ 	</select>
+ 	
+</mapper>

@@ -3,11 +3,13 @@ package cn.tarpas.pocket.service.im;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import cn.tarpas.pocket.mapper.UserMapper;
 import cn.tarpas.pocket.po.User;
 import cn.tarpas.pocket.service.UserService;
 
+@Service
 public class UserServiceIm implements UserService{
 	@Autowired
 	private UserMapper userMapper;

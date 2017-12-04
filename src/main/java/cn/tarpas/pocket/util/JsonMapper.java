@@ -1,5 +1,8 @@
 package cn.tarpas.pocket.util;
 
+import java.util.List;
+
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class JsonMapper {
@@ -12,4 +15,15 @@ public class JsonMapper {
 		
 		return RequestDTO;
 	 }
+	 
+	 public  String listToJson(List obj){
+		 JSONArray Json=JSONArray.fromObject(obj);
+		 return Json.toString();
+	 }
+	 
+	 public <T> String beanToString(T obj){
+		 JSONObject json=JSONObject.fromObject(obj);
+		 return json.toString();
+	 }
+	  
 }
