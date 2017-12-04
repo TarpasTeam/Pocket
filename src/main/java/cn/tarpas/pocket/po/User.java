@@ -13,6 +13,8 @@ public class User {
 
     private String head;
 
+    private Boolean isDeleted;
+
     public Integer getUserId() {
         return userId;
     }
@@ -59,5 +61,13 @@ public class User {
 
     public void setHead(String head) {
         this.head = head == null ? null : head.trim();
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

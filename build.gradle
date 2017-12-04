@@ -50,6 +50,7 @@ dependencies {
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.5.3'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.5.3'
 	compile group: 'redis.clients', name: 'jedis', version: '2.9.0'
+	compile group: 'com.github.pagehelper', name: 'pagehelper', version: '4.1.0'
 	
 }
 

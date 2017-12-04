@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.tarpas.pocket.mapper.CityMapper" >
+  <resultMap id="BaseResultMap" type="City" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="regionId" property="regionid" jdbcType="INTEGER" />
+    <result column="picture" property="picture" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+  		id,name,regionId,picture
+  </sql>
+  
+  <insert id="insert" parameterType="City">
+		insert into city (<include refid="Base_Column_List"/>)values
+  	(#{name},#{regionId},#{picture})  
+  </insert>  
+  
+  <select id="select" parameterType="City" resultType="City">
+		select * from city where isDeleted=false
+		<if test="name!=null">and name=#{name}</if>
+		<if test="id!=null">and id=#{id}</if>
+		<if test="picture!=null">and picture=#{picture}</if>
+		<if test="regionId!=null">and regionId=#{regionId}</if>
+  </select>
+  
+  <update id="update" parameterType="City">
+  		update city 
+  		<set>
+  			<trim suffixOverrides=",">
+  				<if test="name!=null">name=#{name},</if>
+  				<if test="regionId!=null">region=#{regionId},</if>
+  				<if test="isPopular!=null">isPopular=#{isPopular},</if>
+  				<if test="picture!=null">picture=#{picture}</if>
+  			</trim>
+  		</set>
+  		where id=#{id}
+  </update>
+  
+  <update id="delete" parameterType="Integer">
+  	update  city set 
+  		isDeleted=true
+  	where id=#{id}
+  </update>
+  
+
+  		
+ </mapper>
