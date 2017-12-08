@@ -18,7 +18,7 @@ public class BaseServiceImpl<T> implements BaseService<T>  {
 	
 	//创建第一个泛型类的对象并设置id字段的值
 	@SuppressWarnings( "all" )
-	public T createInstanceAndSetIdOfFirstGeneric(Long id){
+	public T createInstanceAndSetIdOfFirstGeneric(Integer id){
 		//为了避免错误的将id设为null是把整张表删除，进行有效性检查
 		if(id==null){
 			throw new RuntimeException("id不能为null");
@@ -81,7 +81,7 @@ public class BaseServiceImpl<T> implements BaseService<T>  {
 		return list.get(0);
 	}
 	
-    public T selectOne(Long id) {
+    public T selectOne(Integer id) {
     	//取得带id属性的T实例
         T pojo = createInstanceAndSetIdOfFirstGeneric(id);
 

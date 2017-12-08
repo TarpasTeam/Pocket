@@ -7,7 +7,10 @@ public enum ErrorStatus {
     ERR_PARAMETER("919002", "参数错误"),
     ERR_PASSWORD("919003","密码错误"),
     ERR_MEMBER_NOT_EXIST("919004", "用户不存在"),
-	ERR_NOT_UPDATED("919005","无更新内容");
+	ERR_NOT_UPDATED("919005","无更新内容"),
+	
+	/** 景点为查找到  */
+	ERR_NOT_FOUND("919011","未查找到相关内容");
     
     private String code;
     private String message;

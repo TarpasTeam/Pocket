@@ -28,7 +28,7 @@ public interface BaseService<T> {
 	
 	public T selectOne(T pojo);
 	
-    public T selectOne(Long id);
+    public T selectOne(Integer id);
     
     //判断是否已经存在
     public boolean isExisted(T pojo);

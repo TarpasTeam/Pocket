@@ -11,6 +11,9 @@ public class ShowScenicReq {
 	
 	@JsonProperty(value = "update_time")
 	private Date update_time;
+	
+	@JsonProperty(value = "keyword")
+	private String keyword;
 
 	public int getCityId() {
 		return cityId;
@@ -29,10 +32,20 @@ public class ShowScenicReq {
 	public void setUpdate_time(Date update_time) {
 		this.update_time = update_time;
 	}
+	
+	
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
 
 	@Override
 	public String toString() {
-		return "[cityId:+"+getCityId()+",update_Time:"+getUpdate_time()+"]";
+		return "[cityId=" + cityId + ", update_time=" + update_time + ", keyword=" + keyword + "]";
 	}
 	
 }

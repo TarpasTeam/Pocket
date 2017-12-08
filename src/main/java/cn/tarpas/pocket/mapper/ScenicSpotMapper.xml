@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.tarpas.pocket.mapper.ScenicSpotsMapper" >
+<mapper namespace="cn.tarpas.pocket.mapper.ScenicSpotMapper" >
 
   <resultMap id="BaseResultMap" type="cn.tarpas.pocket.po.ScenicSpot" >
     <id column="scenic_id" property="scenicId" jdbcType="INTEGER" />
-    <result column="scenic_name" property="scenicName" jdbcType="VARCHAR" />
     <result column="head" property="head" jdbcType="VARCHAR" />
+    <result column="scenic_name" property="scenicName" jdbcType="VARCHAR" />
     <result column="detail_image" property="detailImage" jdbcType="VARCHAR" />
     <result column="intro" property="intro" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="INTEGER" />
@@ -16,7 +16,7 @@
     <result column="heat" property="heat" jdbcType="BIGINT" />
     <result column="city_id" property="cityId" jdbcType="INTEGER" />
     <result column="scenic_class_detial_id" property="scenicClassDetialId" jdbcType="INTEGER" />
-    <result column="isPopular" property="ispopular" jdbcType="BIT" />
+    <result column="isPopular" property="isPopular" jdbcType="BIT" />
     <result column="picture" property="picture" jdbcType="VARCHAR" />
 	<result column="isDeleted" property="isDeleted" jdbcType="BIT"/>
   </resultMap>
@@ -36,10 +36,10 @@
 		#{scenicClassDetialId,jdbcType=INTEGER},0,#{picture,jdbcType=VARCHAR})
  	</insert>
  	
- 	<select id="select" parameterType="cn.tarpas.pocket.po.ScenicSpot" resultType="cn.tarpas.pocket.po.ScenicSpot">
+ 	<select id="select" parameterType="cn.tarpas.pocket.po.ScenicSpot" resultMap="BaseResultMap">
  		select * from scenic_spot 
  		where  isDeleted = false
-			<if test="cityId != null">and city_id = #{cityId,jdbcType=BIGINT} </if>
+			<if test="cityId != null">and city_id = #{cityId,jdbcType=INTEGER} </if>
 			<if test="scenicId != null">and scenic_id = #{scenicId,jdbcType=INTEGER}</if>
 			<if test="scenicName != null">and scenic_name #{scenicName,jdbcType=VARCHAR}</if>
 			<if test="scenicClassDetialId != null">and scenic_class_detial_id=#{scenicClassDetialId,jdbcType=INTEGER}</if>
@@ -75,13 +75,13 @@
  	</update>
  	
  	<!-- 搜索  -->
- 	<select id="search" parameterType="map" resultType="cn.tarpas.pocket.po.ScenicSpot">
+ 	<select id="search" parameterType="map" resultMap="BaseResultMap">
  		select * from scenic_spot
  		where isDeleted = 0
  			<if test="keyword != null">
- 				and scenic_name like #{keyword}
+ 				and ( scenic_name like #{keyword}
  				or price like #{keyword}
- 				or address like #{keyword}
+ 				or address like #{keyword})
  			</if>
  			<if test="cityId != null">
  				and  city_id = #{cityId}

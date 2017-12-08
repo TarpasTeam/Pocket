@@ -1,7 +1,9 @@
 package cn.tarpas.pocket.po;
 
 public class ScenicSpot {
-    private Integer scenicId;
+   
+
+	private Integer scenicId;
 
     private String scenicName;
 
@@ -41,15 +43,16 @@ public class ScenicSpot {
         this.scenicId = scenicId;
     }
 
+
     public String getScenicName() {
-        return scenicName;
-    }
+		return scenicName;
+	}
 
-    public void setScenicName(String scenicName) {
-        this.scenicName = scenicName == null ? null : scenicName.trim();
-    }
+	public void setScenicName(String scenicName) {
+		this.scenicName = scenicName;
+	}
 
-    public String getHead() {
+	public String getHead() {
         return head;
     }
 
@@ -160,4 +163,12 @@ public class ScenicSpot {
     public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
+    @Override
+   	public String toString() {
+   		return "ScenicSpot [scenicId=" + scenicId + ", scenicName=" + scenicName + ", head=" + head + ", detailImage="
+   				+ detailImage + ", intro=" + intro + ", price=" + price + ", address=" + address + ", detailAddress="
+   				+ detailAddress + ", phone=" + phone + ", grade=" + grade + ", heat=" + heat + ", cityId=" + cityId
+   				+ ", scenicClassDetialId=" + scenicClassDetialId + ", isPopular=" + isPopular + ", picture=" + picture
+   				+ ", isDeleted=" + isDeleted + "]";
+   	}
 }
